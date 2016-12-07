@@ -18,9 +18,9 @@
       <div class="col-lg-6 col-lg-offset-3">
         <div class="input-group input-group-lg">
           <span class="input-group-addon" id="sizing-addon1">Git repository URL</span>
-          <input type="text" class="form-control" placeholder="https://...">
+          <input type="text" class="form-control" placeholder="https://..." [(ngModel)]="repository">
           <span class="input-group-btn">
-              <button class="btn btn-default" type="button">Clone</button>
+              <button class="btn btn-default" type="button" (click)="submit()">Clone</button>
             </span>
         </div><!-- /input-group -->
       </div><!-- /.col-lg-6 -->
@@ -35,9 +35,9 @@
 <div class="row">
     <div class="col-lg-6 col-lg-offset-3">
         <div class="list-group">
-            <a href="#" class="list-group-item">
-                <h4 class="list-group-item-heading">example-repository</h4>
-                <p class="list-group-item-text">description of the repository</p>
+            <a href="#" class="list-group-item" *ngFor="let repo of repositories">
+                <h4 class="list-group-item-heading">{{repo.name}}</h4>
+                <p class="list-group-item-text">{{repo.remotePath}}</p>
             </a>
         </div>
     </div><!-- /.row -->
