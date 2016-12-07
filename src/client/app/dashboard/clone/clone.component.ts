@@ -35,7 +35,7 @@ export class CloneComponent implements OnInit{
     console.log("Repository:  " + this.repository);
     this._rest.cloneRepository(this.repository).subscribe(
         result => {
-          console.log('RESULT');
+          this.repositories.unshift(JSON.parse(result._body));
         },
         error => {
           alert("There was an error during cloning.");
