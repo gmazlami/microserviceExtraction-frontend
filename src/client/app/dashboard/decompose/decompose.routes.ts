@@ -4,7 +4,11 @@ import { DecomposeComponent } from './index';
 
 export const DecomposeRoutes: Route[] = [
 	{
-		path: 'decompose',
+		path: 'decompose/:id',
 		component: DecomposeComponent
-	}
+	},
+  {
+    path: 'decompose',
+    component: DecomposeComponent
+  }
 ];

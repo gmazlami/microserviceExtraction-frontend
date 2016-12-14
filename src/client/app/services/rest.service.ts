@@ -12,6 +12,10 @@ export class RestService {
                 protected configs: ConfigService) {
     }
 
+    getRepository(id: Number): Observable<Response> {
+      return this.http.get(this.configs.apiUrl + '/repositories/' + id, this.requestOptions());
+    }
+
     cloneRepository(uri: string): Observable<Response> {
         let repoObject = {uri: uri};
         return this.http.post(this.configs.apiUrl + '/repositories', JSON.stringify(repoObject),this.requestOptions());

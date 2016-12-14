@@ -1,60 +1,52 @@
 <!-- Page Heading -->
-<div class="row">
+<div *ngIf="isDataAvailable">
+
+  <div class="row">
     <div class="col-xl-12">
-        <h2 class="page-header">
-            Decompose
-        </h2>
+      <div class="alert alert-info" role="alert"><h3>Decompose  <b> {{ repository?.name }}</b></h3></div>
     </div>
-</div>
+  </div>
 
-<div class="row">
-    <div class="col-lg-12">
-        <div class="card card-block">
-        <br>
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="input-group input-group-lg">
-              <span class="input-group-addon" id="sizing-addon1">Git repository URL</span>
-              <input type="text" class="form-control" placeholder="https://...">
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Clone</button>
-              </span>
-            </div><!-- /input-group -->
-          </div><!-- /.col-lg-6 -->
-        </div><!-- /.row -->
+  <br>
 
+  <h3> Repository Information </h3>
 
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-6">
-        <div class="card card-block">
-            <p>Select a tab by setting active binding to true:</p>
+  <div class="row">
+      <div class="col-lg-12">
+          <div class="card card-block">
+
+          </div>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-lg-6">
+          <div class="card card-block">
+              <p>Select a tab by setting active binding to true:</p>
 
 
-        </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="card card-block">
+          </div>
+      </div>
+      <div class="col-lg-6">
+          <div class="card card-block">
 
 
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-12">
-        <div class="card card-block">
-            <div class="card-title">Tooltip</div>
+          </div>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-sm-12">
+          <div class="card card-block">
+              <div class="card-title">Tooltip</div>
 
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-12">
-        <div class="card card-block">
-            <h4>Static arrays</h4>
+          </div>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-sm-12">
+          <div class="card card-block">
+              <h4>Static arrays</h4>
 
-        </div>
-    </div>
+          </div>
+      </div>
+  </div>
 </div>
