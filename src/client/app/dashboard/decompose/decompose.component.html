@@ -7,46 +7,103 @@
     </div>
   </div>
 
+
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+      <div class="card card-default">
+        <div class="card-header card-default">
+          <div class="row">
+            <div class="col-xs-3">
+              <i class="fa fa-tasks fa-5x"></i>
+            </div>
+            <div class="col-xs-9 text-center">
+              <div><h1>{{ repository.name }}</h1></div>
+              <div>{{repository.remotePath}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a class="text-success" href="#">
+            <span class="pull-xs-left"><a href="{{repository.remotePath}}">View Details</a></span>
+            <span class="pull-xs-right">
+        </span>
+            <div class="clearfix"></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+      <div class="card card-default">
+        <div class="card-header card-default">
+          <h4>Configure Decomposition</h4>
+        </div>
+        <div class="card-block bg-white">
+          <div class="row">
+            <div class="col-lg-3">
+              <div class="form-group">
+                <small>Strategies:</small>
+                <br>
+                <hr>
+                <div class="checkbox">
+                  <label><input type="checkbox" value="" [(ngModel)]="logicalCoupling"> Logical Couplings</label>
+                </div>
+                <div class="checkbox">
+                  <label><input type="checkbox" value="" [(ngModel)]="contributorCoupling"> Team Structure</label>
+                </div>
+                <div class="checkbox">
+                  <label><input type="checkbox" value="" [(ngModel)]="semanticCoupling"> Semantic Similarity</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-9">
+              <small>Parameters:</small>
+              <br>
+              <hr>
+              <div class="row">
+                <div class="col-lg-6">
+                  <fieldset class="form-group">
+                    <input placeholder="Number of microservices" class="form-control" [(ngModel)]="numServices" value="4">
+                    <p class="help-block">Number of wanted microservices. This will impact the granularity of the resulting services.</p>
+                  </fieldset>
+                </div>
+                <div class="col-lg-6">
+                  <fieldset class="form-group">
+                    <input type="number" placeholder="History interval in seconds" class="form-control" [(ngModel)]="intervalSeconds">
+                    <p class="help-block">Size of the interval window for the history analysis in seconds.</p>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-lg-offset-3">
+          <div class="card card-danger card-inverse text-center" (click)="decompose()">
+            <div class="card-header card-danger card-inverse text-center">
+              <h3>Decompose</h3>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <br>
   <br>
 
-  <h3> Repository Information </h3>
-
   <div class="row">
-      <div class="col-lg-12">
-          <div class="card card-block">
-
-          </div>
-      </div>
+    <div class="col-xl-12">
+      <div class="alert alert-info" role="alert"><h3>Previous decompositions of <b>{{repository.name}}</b></h3></div>
+    </div>
   </div>
-  <div class="row">
-      <div class="col-lg-6">
-          <div class="card card-block">
-              <p>Select a tab by setting active binding to true:</p>
 
-
-          </div>
-      </div>
-      <div class="col-lg-6">
-          <div class="card card-block">
-
-
-          </div>
-      </div>
-  </div>
-  <div class="row">
-      <div class="col-sm-12">
-          <div class="card card-block">
-              <div class="card-title">Tooltip</div>
-
-          </div>
-      </div>
-  </div>
-  <div class="row">
-      <div class="col-sm-12">
-          <div class="card card-block">
-              <h4>Static arrays</h4>
-
-          </div>
-      </div>
-  </div>
 </div>
+
+
+
+
+

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../../services/rest.service';
 import { Repository } from '../../models/repository.model';
+import { DecompositionDTO } from '../../models/decomposition.dto';
 import {ActivatedRoute } from '@angular/router';
 
 
@@ -17,6 +18,16 @@ import {ActivatedRoute } from '@angular/router';
 export class DecomposeComponent implements OnInit{
 
   repository: Repository;
+
+  logicalCoupling: boolean = true;
+
+  semanticCoupling: boolean;
+
+  contributorCoupling: boolean;
+
+  numServices: Number = 4;
+
+  intervalSeconds: Number = 3600;
 
   isDataAvailable: boolean;
 
@@ -37,6 +48,18 @@ export class DecomposeComponent implements OnInit{
         }
       );
     });
+  }
+
+  decompose(): void {
+    let dto = {};
+    dto.intervalSeconds = this.intervalSeconds;
+    dto.numServices = this.numServices;
+    dto.logicalCoupling = this.logicalCoupling == true ? true : false;
+    dto.semanticCoupling = this.semanticCoupling == true ? true : false;
+    dto.contributorCoupling = this.contributorCoupling == true ? true : false;
+
+    console.log(dto);
+
   }
 
 
