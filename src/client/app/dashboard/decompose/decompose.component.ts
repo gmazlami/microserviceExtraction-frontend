@@ -51,14 +51,21 @@ export class DecomposeComponent implements OnInit{
   }
 
   decompose(): void {
-    let dto = {};
+    var dto = new DecompositionDTO();
     dto.intervalSeconds = this.intervalSeconds;
     dto.numServices = this.numServices;
     dto.logicalCoupling = this.logicalCoupling == true ? true : false;
     dto.semanticCoupling = this.semanticCoupling == true ? true : false;
     dto.contributorCoupling = this.contributorCoupling == true ? true : false;
 
-    console.log(dto);
+    this._rest.decompose(this.repository.id, dto).subscribe(
+      result => {
+        console.log(result);
+      },
+      error => {
+        console.log(error);
+      }
+    );
 
   }
 

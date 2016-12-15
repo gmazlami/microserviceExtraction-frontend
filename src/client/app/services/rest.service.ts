@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Rx';
 import {RequestOptions, Headers} from '@angular/http';
 
 import {ConfigService} from './config.service';
+import {DecompositionDTO} from "../models/decomposition.dto";
 
 @Injectable()
 export class RestService {
@@ -23,6 +24,11 @@ export class RestService {
 
     listRepositories(): Observable<Response> {
         return this.http.get(this.configs.apiUrl + '/repositories', this.requestOptions());
+    }
+
+    decompose(id: number, dto: DecompositionDTO): Observable<Response> {
+      var uri = this.configs.apiUrl + '/repositories/' + id + '/decomposition';
+      return this.http.post(uri, JSON.stringify(dto), this.requestOptions());
     }
 
     requestOptions():RequestOptions {

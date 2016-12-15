@@ -1,4 +1,4 @@
-export interface DecompositionDTO {
+export class DecompositionDTO {
   logicalCoupling: boolean;
   semanticCoupling: boolean;
   contributorCoupling: boolean;
