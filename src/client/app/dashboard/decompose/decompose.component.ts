@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { RestService } from '../../services/rest.service';
 import { Repository } from '../../models/repository.model';
 import { DecompositionDTO } from '../../models/decomposition.dto';
 import {ActivatedRoute } from '@angular/router';
 
 
+declare var vis: any;
 
 
 @Component({
@@ -29,13 +30,50 @@ export class DecomposeComponent implements OnInit{
 
   intervalSeconds: Number = 3600;
 
+  sizeThreshold: Number = 10;
+
   isDataAvailable: boolean;
 
-  constructor(private _rest : RestService, private _route: ActivatedRoute){
+  @ViewChild('mynetwork') networkDiv;
+
+
+  constructor(private _rest : RestService, private _route: ActivatedRoute, private _element: ElementRef){
 
   }
 
+  ngAfterViewInit(): void{
+    console.log(this.networkDiv);
+
+    var nodes = new vis.DataSet([
+      {id: 1, label: 'Node 1'},
+      {id: 2, label: 'Node 2'},
+      {id: 3, label: 'Node 3'},
+      {id: 4, label: 'Node 4'},
+      {id: 5, label: 'Node 5'}
+    ]);
+
+    // create an array with edges
+    var edges = new vis.DataSet([
+      {from: 1, to: 3},
+      {from: 1, to: 2},
+      {from: 2, to: 4},
+      {from: 2, to: 5}
+    ]);
+
+
+    // provide the data in the vis format
+    var data = {
+      nodes: nodes,
+      edges: edges
+    };
+    var options = {};
+
+    // initialize your network!
+    var network = new vis.Network(this.networkDiv.nativeElement, data, options);
+  }
+
   ngOnInit(): void {
+
     this._route.params.subscribe(params => {
       let id = +params['id'];
       this._rest.getRepository(id).subscribe(
@@ -48,12 +86,17 @@ export class DecomposeComponent implements OnInit{
         }
       );
     });
+
+
+    console.log(this.networkDiv.nativeElement);
+
   }
 
   decompose(): void {
     var dto = new DecompositionDTO();
     dto.intervalSeconds = this.intervalSeconds;
     dto.numServices = this.numServices;
+    dto.sizeThreshold = this.sizeThreshold;
     dto.logicalCoupling = this.logicalCoupling == true ? true : false;
     dto.semanticCoupling = this.semanticCoupling == true ? true : false;
     dto.contributorCoupling = this.contributorCoupling == true ? true : false;

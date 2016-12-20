@@ -4,4 +4,5 @@ export class DecompositionDTO {
   contributorCoupling: boolean;
   numServices: Number;
   intervalSeconds: Number;
+  sizeThreshold: Number;
 }

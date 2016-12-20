@@ -1,4 +1,15 @@
 <!-- Page Heading -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.css" />
+
+<style type="text/css">
+  #mynetwork {
+    width: 600px;
+    height: 400px;
+    border: 1px solid lightgray;
+  }
+</style>
+
 <div *ngIf="isDataAvailable">
 
   <div class="row">
@@ -62,16 +73,22 @@
               <br>
               <hr>
               <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                   <fieldset class="form-group">
                     <input placeholder="Number of microservices" class="form-control" [(ngModel)]="numServices" value="4">
                     <p class="help-block">Number of wanted microservices. This will impact the granularity of the resulting services.</p>
                   </fieldset>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                   <fieldset class="form-group">
                     <input type="number" placeholder="History interval in seconds" class="form-control" [(ngModel)]="intervalSeconds">
                     <p class="help-block">Size of the interval window for the history analysis in seconds.</p>
+                  </fieldset>
+                </div>
+                <div class="col-lg-4">
+                  <fieldset class="form-group">
+                    <input type="number" placeholder="Max. service size (# classes)" class="form-control" [(ngModel)]="sizeThreshold">
+                    <p class="help-block">Maximum number of classes allowed in a service.</p>
                   </fieldset>
                 </div>
               </div>
@@ -99,9 +116,13 @@
     <div class="col-xl-12">
       <div class="alert alert-info" role="alert"><h3>Previous decompositions of <b>{{repository.name}}</b></h3></div>
     </div>
+
+
   </div>
 
 </div>
+
+<div #mynetwork id="mynetwork"></div>
 
 
 
