@@ -42,8 +42,6 @@ export class DecomposeComponent implements OnInit{
   }
 
   ngAfterViewInit(): void{
-    console.log(this.networkDiv);
-
     var nodes = new vis.DataSet([
       {id: 1, label: 'Node 1'},
       {id: 2, label: 'Node 2'},
@@ -66,10 +64,12 @@ export class DecomposeComponent implements OnInit{
       nodes: nodes,
       edges: edges
     };
+
+    console.log(data);
     var options = {};
 
     // initialize your network!
-    var network = new vis.Network(this.networkDiv.nativeElement, data, options);
+    // var network = new vis.Network(this.networkDiv.nativeElement, data, options);
   }
 
   ngOnInit(): void {
@@ -86,10 +86,6 @@ export class DecomposeComponent implements OnInit{
         }
       );
     });
-
-
-    console.log(this.networkDiv.nativeElement);
-
   }
 
   decompose(): void {
@@ -103,7 +99,27 @@ export class DecomposeComponent implements OnInit{
 
     this._rest.decompose(this.repository.id, dto).subscribe(
       result => {
-        console.log(result);
+        var response = result._body;
+        var options = {};
+
+        var graph = JSON.parse(response);
+
+        var nodes = new vis.DataSet(graph.nodes);
+
+        // create an array with edges
+        var edges = new vis.DataSet(graph.edges);
+
+
+        // provide the data in the vis format
+        var data = {
+          nodes: nodes,
+          edges: edges
+        };
+
+        // console.log(data);
+
+        var network = new vis.Network(this.networkDiv.nativeElement, data, options);
+
       },
       error => {
         console.log(error);
