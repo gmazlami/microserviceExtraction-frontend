@@ -41,36 +41,6 @@ export class DecomposeComponent implements OnInit{
 
   }
 
-  ngAfterViewInit(): void{
-    var nodes = new vis.DataSet([
-      {id: 1, label: 'Node 1'},
-      {id: 2, label: 'Node 2'},
-      {id: 3, label: 'Node 3'},
-      {id: 4, label: 'Node 4'},
-      {id: 5, label: 'Node 5'}
-    ]);
-
-    // create an array with edges
-    var edges = new vis.DataSet([
-      {from: 1, to: 3},
-      {from: 1, to: 2},
-      {from: 2, to: 4},
-      {from: 2, to: 5}
-    ]);
-
-
-    // provide the data in the vis format
-    var data = {
-      nodes: nodes,
-      edges: edges
-    };
-
-    console.log(data);
-    var options = {};
-
-    // initialize your network!
-    // var network = new vis.Network(this.networkDiv.nativeElement, data, options);
-  }
 
   ngOnInit(): void {
 
@@ -108,12 +78,36 @@ export class DecomposeComponent implements OnInit{
           }
         };
 
-        var graph = JSON.parse(response);
+        var microservices = JSON.parse(response);
 
-        var nodes = new vis.DataSet(graph.nodes);
+        var componentIds = [];
+
+        var nodeList = [];
+
+        var edgeList = [];
+
+        for(var i=0; i < microservices.length; i++){
+          componentIds.push(microservices[i].componentId);
+
+          for(var k=0; k < microservices[i].nodes.length; k++){
+            var node = microservices[i].nodes[k];
+            node.componentId = microservices[i].componentId;
+            nodeList.push(node);
+          }
+
+          for(var k=0; k < microservices[i].edges.length; k++){
+            edgeList.push(microservices[i].edges[k]);
+          }
+
+        }
+
+
+
+
+        var nodes = new vis.DataSet(nodeList);
 
         // create an array with edges
-        var edges = new vis.DataSet(graph.edges);
+        var edges = new vis.DataSet(edgeList);
 
 
         // provide the data in the vis format
@@ -122,90 +116,40 @@ export class DecomposeComponent implements OnInit{
           edges: edges
         };
 
+        var initiated = false;
+
         // console.log(data);
 
         var network = new vis.Network(this.networkDiv.nativeElement, data, options);
 
+        // form clusters after drawing the nodes
+        network.on("afterDrawing", function (params) {
+          if(initiated==false){
 
-        var clusterIndex = 0;
-        var clusters = [];
-        var lastClusterZoomLevel = 0;
-        var clusterFactor = 0.9;
 
-        // make the clusters
-        function makeClusters(scale) {
-          var clusterOptionsByData = {
-            processProperties: function (clusterOptions, childNodes) {
-              clusterIndex = clusterIndex + 1;
-              var childrenCount = 0;
-              for (var i = 0; i < childNodes.length; i++) {
-                childrenCount += childNodes[i].childrenCount || 1;
-              }
-              clusterOptions.childrenCount = childrenCount;
-              clusterOptions.label = "# " + childrenCount + "";
-              clusterOptions.font = {size: childrenCount*5+30}
-              clusterOptions.id = 'cluster:' + clusterIndex;
-              clusters.push({id:'cluster:' + clusterIndex, scale:scale});
-              return clusterOptions;
-            },
-            clusterNodeProperties: {borderWidth: 3, shape: 'database', font: {size: 30}}
-          }
-          network.clusterOutliers(clusterOptionsByData);
-          network.setOptions({
-            physics: {repulsion:{centralGravity: 0.0}}}
-          );
+            for(var i = 0; i < componentIds.length; i++){
+              console.log("Clustering: " + componentIds[i]);
+              var options = {
+                joinCondition: function(nodeOptions){
 
-        }
-
-        // open them back up!
-        function openClusters(scale) {
-          var newClusters = [];
-          var declustered = false;
-          for (var i = 0; i < clusters.length; i++) {
-            if (clusters[i].scale < scale) {
-              network.openCluster(clusters[i].id);
-              lastClusterZoomLevel = scale;
-              declustered = true;
+                  if(nodeOptions.componentId == componentIds[i]){
+                    return true;
+                  }else{
+                    return false;
+                  }
+                }
+              };
+              network.cluster(options);
             }
-            else {
-              newClusters.push(clusters[i])
-            }
-          }
-          clusters = newClusters;
-
-          network.setOptions({
-            physics: {repulsion:{centralGravity: 0.0}}}
-          );
-
-        }
-
-        // set the first initial zoom level
-        network.once('initRedraw', function() {
-          if (lastClusterZoomLevel === 0) {
-            lastClusterZoomLevel = network.getScale();
+            initiated = true;
           }
         });
 
-        // we use the zoom event for our clustering
-        network.on('zoom', function (params) {
-          if (params.direction == '-') {
-            if (params.scale < lastClusterZoomLevel*clusterFactor) {
-              makeClusters(params.scale);
-              lastClusterZoomLevel = params.scale;
-            }
-          }
-          else {
-            openClusters(params.scale);
-          }
-        });
 
-        // if we click on a node, we want to open it up!
         network.on("selectNode", function (params) {
-          if (params.nodes.length == 1) {
-            if (network.isCluster(params.nodes[0]) == true) {
-              network.openCluster(params.nodes[0])
-            }
-          }
+          var selectedNodeId = params.nodes[0];
+          console.log("SelectedNodeId: " + selectedNodeId);
+          network.openCluster(selectedNodeId,{});
         });
 
       },
