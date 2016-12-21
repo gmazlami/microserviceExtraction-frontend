@@ -72,8 +72,15 @@ export class DecomposeComponent implements OnInit{
         var response = result._body;
         var options = {
           physics: {
-            repulsion:{
-              centralGravity: 0.0
+
+            forceAtlas2Based:{
+              gravitationalConstant: -1000,
+              springLength: 50,
+              centralGravity: 0,
+              springConstant: 0.9,
+              springLength: 20,
+              avoidOverlap: 1,
+              damping: 0
             }
           }
         };
@@ -101,19 +108,10 @@ export class DecomposeComponent implements OnInit{
 
         }
 
-
-
-
-        var nodes = new vis.DataSet(nodeList);
-
-        // create an array with edges
-        var edges = new vis.DataSet(edgeList);
-
-
         // provide the data in the vis format
         var data = {
-          nodes: nodes,
-          edges: edges
+          nodes: new vis.DataSet(nodeList),
+          edges: new vis.DataSet(edgeList)
         };
 
         var initiated = false;
@@ -126,9 +124,7 @@ export class DecomposeComponent implements OnInit{
         network.on("afterDrawing", function (params) {
           if(initiated==false){
 
-
             for(var i = 0; i < componentIds.length; i++){
-              console.log("Clustering: " + componentIds[i]);
               var options = {
                 joinCondition: function(nodeOptions){
 
@@ -143,12 +139,12 @@ export class DecomposeComponent implements OnInit{
             }
             initiated = true;
           }
+
         });
 
 
         network.on("selectNode", function (params) {
           var selectedNodeId = params.nodes[0];
-          console.log("SelectedNodeId: " + selectedNodeId);
           network.openCluster(selectedNodeId,{});
         });
 

@@ -4,7 +4,7 @@
 
 <style type="text/css">
   #mynetwork {
-    width: 1600px;
+    width: 100%;
     height: 800px;
     border: 1px solid lightgray;
   }
@@ -98,12 +98,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-6 col-lg-offset-3">
-          <div class="card card-danger card-inverse text-center" (click)="decompose()">
-            <div class="card-header card-danger card-inverse text-center">
-              <h3>Decompose</h3>
-            </div>
-          </div>
+      <div class="col-lg-4 col-lg-offset-4">
+              <button class="btn-block btn-danger" (click)="decompose()">Decompose</button>
       </div>
     </div>
   </div>
@@ -113,9 +109,6 @@
   <br>
 
   <div class="row">
-    <div class="col-xl-12">
-      <div class="alert alert-info" role="alert"><h3>Previous decompositions of <b>{{repository.name}}</b></h3></div>
-    </div>
 
 
   </div>
