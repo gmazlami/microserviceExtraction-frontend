@@ -74,6 +74,7 @@ export class DecomposeComponent implements OnInit{
       result => {
         var response = result._body;
         this._datapassingService.setDecomposition(response);
+        this._datapassingService.setRepository(this.repository);
         this._router.navigateByUrl('/graph');
         $('#myModal').modal('hide');
       },
