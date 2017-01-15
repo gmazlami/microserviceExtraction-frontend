@@ -19,6 +19,7 @@ import { CloneModule } from './dashboard/clone/clone.module';
 import { DecomposeModule } from './dashboard/decompose/decompose.module';
 
 import {SidebarComponent} from './shared/index';
+import {GraphModule} from "./dashboard/graph/graph.module";
 
 @NgModule({
 	imports: [
@@ -32,7 +33,8 @@ import {SidebarComponent} from './shared/index';
 		HomeModule,
 		BlankPageModule,
 		CloneModule,
-        DecomposeModule
+    DecomposeModule,
+    GraphModule
 	],
 	declarations: [AppComponent, SidebarComponent],
 	providers: [{

@@ -1,6 +1,7 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { Config } from './shared/index';
 import { ConfigService } from './services/config.service';
+import {DataPassingService} from "./services/datapassing.service";
 
 /**
  * This class represents the main application component. Within the @Routes annotation is the configuration of the
@@ -10,7 +11,7 @@ import { ConfigService } from './services/config.service';
 	moduleId: module.id,
 	selector: 'sd-app',
 	templateUrl: 'app.component.html',
-	providers: [ConfigService]
+	providers: [ConfigService, DataPassingService]
 })
 
 export class AppComponent {
