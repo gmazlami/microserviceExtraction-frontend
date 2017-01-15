@@ -7,8 +7,8 @@ import { DataPassingService } from "../../services/datapassing.service";
 import { Router } from '@angular/router';
 
 
-
 declare var vis: any;
+declare var $: any;
 
 
 @Component({
@@ -60,6 +60,8 @@ export class DecomposeComponent implements OnInit{
   }
 
   decompose(): void {
+    $('#myModal').modal('show');
+
     var dto = new DecompositionDTO();
     dto.intervalSeconds = this.intervalSeconds;
     dto.numServices = this.numServices;
@@ -73,6 +75,7 @@ export class DecomposeComponent implements OnInit{
         var response = result._body;
         this._datapassingService.setDecomposition(response);
         this._router.navigateByUrl('/graph');
+        $('#myModal').modal('hide');
       },
       error => {
         console.log(error);
