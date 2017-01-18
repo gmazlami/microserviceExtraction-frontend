@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../../services/rest.service';
-import { Repository } from '../../models/repository.model';
+import {DataPassingService} from "../../services/datapassing.service";
+import { Router } from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -13,7 +14,7 @@ export class MicroservicesComponent implements OnInit{
 
   decompositions : Array<Object> = [];
 
-  constructor(private _rest : RestService){
+  constructor(private _rest : RestService, private _datapassingService: DataPassingService, private _router: Router){
 
   }
 
@@ -61,9 +62,11 @@ export class MicroservicesComponent implements OnInit{
     }else{
       return "No Parameters";
     }
+  }
 
-
-
+  selectDecomposition(decomp:any): void {
+    this._datapassingService.setRepository(decomp.repo);
+    this._router.navigate(['/graph', decomp.decompositionId]);
   }
 
 

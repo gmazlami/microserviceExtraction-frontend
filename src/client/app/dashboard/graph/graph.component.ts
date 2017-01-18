@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DataPassingService } from "../../services/datapassing.service";
 
 
+
 declare var vis: any;
 
 
@@ -26,17 +27,12 @@ export class GraphComponent implements OnInit{
 
   @ViewChild('mynetwork') networkDiv;
 
-
   constructor(private _rest : RestService, private _route: ActivatedRoute, private _datapassingService: DataPassingService){
 
   }
 
 
-  ngOnInit(): void {
-
-    this.repository = this._datapassingService.getRepository();
-    this.decomposition = this._datapassingService.getDecomposition();
-
+  createNetwork(): void {
     this.isDataAvailable = true;
 
     var options = {
@@ -72,6 +68,7 @@ export class GraphComponent implements OnInit{
       }
 
       for(var k=0; k < microservices[i].edges.length; k++){
+        console.log(microservices[i].edges[k]);
         edgeList.push(microservices[i].edges[k]);
       }
 
@@ -113,6 +110,25 @@ export class GraphComponent implements OnInit{
       var selectedNodeId = params.nodes[0];
       network.openCluster(selectedNodeId,{});
     });
+  }
 
+  ngOnInit(): void {
+    this._route
+      .params
+      .subscribe(params => {
+        if(params['id']){
+          // means we come from the 'microservices' view
+          this.repository = this._datapassingService.getRepository();
+          this._rest.getDecomposition(params['id']).subscribe(response => {
+            this.decomposition = response._body;
+            this.createNetwork();
+          });
+        }else{
+          // means we come from the 'decompose' view
+          this.repository = this._datapassingService.getRepository();
+          this.decomposition = this._datapassingService.getDecomposition();
+          this.createNetwork();
+        }
+      });
   }
 }

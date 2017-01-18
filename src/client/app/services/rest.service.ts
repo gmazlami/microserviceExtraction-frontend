@@ -26,6 +26,10 @@ export class RestService {
         return this.http.get(this.configs.apiUrl + '/repositories', this.requestOptions());
     }
 
+    getDecomposition(decompositionId: number): Observable<Response>{
+      return this.http.get(this.configs.apiUrl + '/microservices/' + decompositionId, this.requestOptions());
+    }
+
     listDecompositions(): Observable<Response> {
       return this.http.get(this.configs.apiUrl + '/microservices', this.requestOptions());
     }
@@ -48,14 +52,3 @@ export class RestService {
 
 }
 
-// query(search: string): Observable<any[]> {
-//     return this.http.get(this.configs.apiUrl + '/' + this.pluralizedResourceName(), this.request.getOptions(null, search))
-//         .map(res => <this[]> res.json())
-//         .catch(err => this.handleError(err));
-// }
-//
-// get(id: number | string, search: string): Observable<any> {
-//     return this.http.get(this.configs.apiUrl + '/' + this.pluralizedResourceName() + '/' + id, this.request.getOptions(null, search))
-//         .map(res => <this> res.json())
-//         .catch(err => this.handleError(err));
-// }
