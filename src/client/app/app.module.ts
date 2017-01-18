@@ -17,6 +17,7 @@ import { HomeModule } from './dashboard/home/home.module';
 import { BlankPageModule } from './dashboard/blank-page/blankPage.module';
 import { CloneModule } from './dashboard/clone/clone.module';
 import { DecomposeModule } from './dashboard/decompose/decompose.module';
+import { MicroservicesModule } from './dashboard/microservices/microservices.module';
 
 import {SidebarComponent} from './shared/index';
 import {GraphModule} from "./dashboard/graph/graph.module";
@@ -34,7 +35,8 @@ import {GraphModule} from "./dashboard/graph/graph.module";
 		BlankPageModule,
 		CloneModule,
     DecomposeModule,
-    GraphModule
+    GraphModule,
+    MicroservicesModule
 	],
 	declarations: [AppComponent, SidebarComponent],
 	providers: [{

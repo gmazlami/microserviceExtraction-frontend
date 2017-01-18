@@ -26,6 +26,10 @@ export class RestService {
         return this.http.get(this.configs.apiUrl + '/repositories', this.requestOptions());
     }
 
+    listDecompositions(): Observable<Response> {
+      return this.http.get(this.configs.apiUrl + '/microservices', this.requestOptions());
+    }
+
     decompose(id: number, dto: DecompositionDTO): Observable<Response> {
       var uri = this.configs.apiUrl + '/repositories/' + id + '/decomposition';
       return this.http.post(uri, JSON.stringify(dto), this.requestOptions());

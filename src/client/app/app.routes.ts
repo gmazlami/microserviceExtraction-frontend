@@ -7,6 +7,7 @@ import { BlankPageRoutes } from './dashboard/blank-page/index';
 import { CloneRoutes } from './dashboard/clone/index';
 import { DecomposeRoutes } from './dashboard/decompose/index';
 import { GraphRoutes } from './dashboard/graph/index';
+import { MicroservicesRoutes } from './dashboard/microservices/index';
 
 
 export const routes: Routes = [
@@ -15,5 +16,6 @@ export const routes: Routes = [
 	...CloneRoutes,
   ...DecomposeRoutes,
   ...GraphRoutes,
+  ...MicroservicesRoutes,
 	{ path: '**', component: CloneComponent },
 ];

@@ -1,0 +1,20 @@
+<!-- Page Heading -->
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="alert alert-info" role="alert"><h3>Existing Decompositions</h3></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="list-group">
+            <a [routerLink]="['/decompose']"  class="list-group-item" *ngFor="let decomp of decompositions">
+                <h4 class="list-group-item-heading">ID: {{decomp.decompositionId}} | {{decomp.repo.name}}</h4>
+                <p class="list-group-item-text">{{decomp.repo.remotePath}}</p>
+                <p class="list-group-item-text">{{parameterString(decomp.parameters)}}</p>
+            </a>
+        </div>
+    </div><!-- /.row -->
+</div>
+
+
